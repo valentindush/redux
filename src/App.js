@@ -1,6 +1,7 @@
 import logo from './logo.svg';
 import './App.css';
 import {useSelector, useDispatch} from 'react-redux';
+import { removeFromCart } from './actions/cartActions';
 function App() {
 
   const counter = useSelector(state => state.counter);
@@ -19,7 +20,12 @@ function App() {
     dispatch({type: 'ADD_TO_CART', payload: product})
   }
 
+  const remove = (product)=>{
+    dispatch(removeFromCart(product))
+  }
+
   const cartProducts = useSelector(state => state.cart)
+
   return (
 
 
@@ -48,6 +54,7 @@ function App() {
 
     <div className='cart'>
       <h2>Cart</h2>
+      <h3>Total: {cartProducts.length} items</h3>
 
       <div className=''>
           {cartProducts.map((item)=>{
@@ -55,7 +62,7 @@ function App() {
               <div className='cart-item' key={item.id}>
                 <p>{item.name}</p>
                 <p>{item.price}</p>
-                
+                <button onClick={()=>remove(item)}>Remove</button>
               </div>
             )
           })}
